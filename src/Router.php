@@ -37,37 +37,50 @@ class Router
     {
         $resolver = $this->getResolver();
 
-        //Get the controller to be rendered according to the resolver
+        // Get the controller to be rendered according to the resolver
         $controller = $this->resolvers[$resolver]->resolve(RouteRegistry::getInstance());
 
-        //Call the controller
-        $args = explode('::', $controller['controller']);
-        $args[0]::$args[1]();
+        return $this->call($controller);
     }
 
     private function getResolver()
     {
-        if     ( is_404()               && $resolver = '404') :
-        elseif ( is_search()            && $resolver = 'search') :
-        elseif ( is_front_page()        && $resolver = 'front') :
-        elseif ( is_home()              && $resolver = 'home') :
-        elseif ( is_post_type_archive() && $resolver = 'archive') :
-        elseif ( is_tax()               && $resolver = 'taxonomy') :
-        elseif ( is_attachment()        && $resolver = get_attachment_template()     ) :
+        if     (is_404()               && $resolver = '404') :
+        elseif (is_search()            && $resolver = 'search') :
+        elseif (is_front_page()        && $resolver = 'front') :
+        elseif (is_home()              && $resolver = 'home') :
+        elseif (is_post_type_archive() && $resolver = 'archive') :
+        elseif (is_tax()               && $resolver = 'taxonomy') :
+        elseif (is_attachment()        && $resolver = get_attachment_template()) :
             remove_filter('the_content', 'prepend_attachment');
-        elseif ( is_single()            && $resolver = 'single') :
-        elseif ( is_page()              && $resolver = 'page') :
-        elseif ( is_category()          && $resolver = 'category') :
-        elseif ( is_tag()               && $resolver = get_tag_template()            ) :
-        elseif ( is_author()            && $resolver = get_author_template()         ) :
-        elseif ( is_date()              && $resolver = get_date_template()           ) :
-        elseif ( is_archive()           && $resolver = 'archive') :
-        elseif ( is_comments_popup()    && $resolver = get_comments_popup_template() ) :
-        elseif ( is_paged()             && $resolver = get_paged_template()          ) :
+        elseif (is_single()            && $resolver = 'single') :
+        elseif (is_page()              && $resolver = 'page') :
+        elseif (is_category()          && $resolver = 'category') :
+        elseif (is_tag()               && $resolver = get_tag_template()) :
+        elseif (is_author()            && $resolver = get_author_template()) :
+        elseif (is_date()              && $resolver = get_date_template()) :
+        elseif (is_archive()           && $resolver = 'archive') :
+        elseif (is_comments_popup()    && $resolver = get_comments_popup_template()) :
+        elseif (is_paged()             && $resolver = get_paged_template()) :
         else :
             $resolver = $resolver = 'index';
         endif;
 
         return $resolver;
+    }
+
+    private function call($controller)
+    {
+        list($controller, $method) = explode('::', $controller['controller']);
+        $reflectionClass = new \ReflectionClass($controller);
+        $reflectionMethod = $reflectionClass->getMethod($method);
+
+        if (false === $reflectionMethod->isStatic()) {
+            $controller = new $controller();
+
+            return $controller->$method();
+        }
+
+        return $controller::$method();
     }
 }
