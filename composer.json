@@ -1,23 +1,23 @@
 {
-  "name": "lin3s/wp-routing",
-  "description": "Routing for WordPress",
-  "homepage": "http://lin3s.com",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Gorka Laucirica",
-      "email": "gorka@lin3s.com"
+    "name": "lin3s/wp-routing",
+    "description": "Symfony style routing for WordPress",
+    "homepage": "http://lin3s.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gorka Laucirica",
+            "email": "gorka@lin3s.com"
+        },
+        {
+            "name": "Beñat Espiña",
+            "email": "bespina@lin3s.com"
+        }
+    ],
+    "require": {
+        "symfony/yaml": "~2.3"
     },
-    {
-      "name": "Beñat Espiña",
-      "email": "bespina@lin3s.com"
+    "autoload": {
+        "psr-4": {"LIN3S\\WPRouting\\": "src"}
     }
-  ],
-  "require": {
-    "symfony/yaml": "~2.3"
-  },
-  "autoload": {
-    "psr-4": {"LIN3S\\WPRouting\\": "src"}
-  }
 }

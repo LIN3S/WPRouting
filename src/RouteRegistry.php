@@ -14,7 +14,7 @@ class RouteRegistry
     {
         $file = get_template_directory() . '/Resources/config/routing.yml';
 
-        if(!file_exists($file)) {
+        if (!file_exists($file)) {
             throw new \Exception('Routing config file must be located at {templatePath}/Resources/config/routing.yml');
         }
 
@@ -24,7 +24,7 @@ class RouteRegistry
 
     public static function getInstance()
     {
-        if(!isset($instance)) {
+        if (!isset($instance)) {
             self::$instance = new self();
         }
 
@@ -44,7 +44,8 @@ class RouteRegistry
         return $found;
     }
 
-    public function getByTypeAndSlug($type, $slug) {
+    public function getByTypeAndSlug($type, $slug)
+    {
         $found = [];
 
         foreach ($this->routes as $route) {
@@ -56,7 +57,8 @@ class RouteRegistry
         return $found;
     }
 
-    public function getByTypeAndId($type, $id) {
+    public function getByTypeAndId($type, $id)
+    {
         $found = [];
 
         foreach ($this->routes as $route) {
@@ -68,7 +70,8 @@ class RouteRegistry
         return $found;
     }
 
-    public function validateRoutes() {
+    public function validateRoutes()
+    {
         foreach ($this->routes as $route) {
             if (!isset($route['controller'])) {
                 throw new \InvalidArgumentException(
