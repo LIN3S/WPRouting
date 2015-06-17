@@ -18,7 +18,7 @@ class CategoryResolver extends Resolver
                 return $controllers[0];
             }
 
-            $controllers = $routes->getByTypeAndId('category', $category->id);
+            $controllers = $routes->getByTypeAndId('category', $category->term_id);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
