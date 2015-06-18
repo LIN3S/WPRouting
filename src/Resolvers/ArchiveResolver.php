@@ -12,7 +12,6 @@ class ArchiveResolver extends Resolver
     {
         $postType = get_query_var('post_type');
 
-        echo $postType;die();
         if (is_array($postType)) {
             $postType = reset($postType);
         }
