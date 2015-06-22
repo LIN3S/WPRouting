@@ -70,6 +70,18 @@ class RouteRegistry
         return $found;
     }
 
+    public function getByTemplate($name) {
+        $found = [];
+
+        foreach ($this->routes as $route) {
+            if (isset($route['template']) && $route['template'] == $name) {
+                $found[] = $route;
+            }
+        }
+
+        return $found;
+    }
+
     public function validateRoutes()
     {
         foreach ($this->routes as $route) {

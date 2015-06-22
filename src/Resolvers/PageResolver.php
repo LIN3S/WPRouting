@@ -10,7 +10,17 @@ class PageResolver extends Resolver
 
     public function resolve(RouteRegistry $routes)
     {
+        $template = get_page_template_slug();
+
+        if($template) {
+            $controllers = $routes->getByTemplate($template);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+        }
+
         $pagename = get_query_var('pagename');
+
         if ($pagename) {
             $controllers = $routes->getByTypeAndSlug('page', $pagename);
             if (count($controllers) > 0) {
