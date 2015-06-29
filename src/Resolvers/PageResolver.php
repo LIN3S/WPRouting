@@ -12,7 +12,7 @@ class PageResolver extends Resolver
     {
         $template = get_page_template_slug();
 
-        if($template) {
+        if ($template) {
             $controllers = $routes->getByTemplate($template);
             if (count($controllers) > 0) {
                 return $controllers[0];

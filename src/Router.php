@@ -4,6 +4,7 @@ namespace LIN3S\WPRouting;
 
 use LIN3S\WPRouting\Resolvers\ArchiveResolver;
 use LIN3S\WPRouting\Resolvers\CategoryResolver;
+use LIN3S\WPRouting\Resolvers\DateResolver;
 use LIN3S\WPRouting\Resolvers\FrontResolver;
 use LIN3S\WPRouting\Resolvers\HomeResolver;
 use LIN3S\WPRouting\Resolvers\NotFoundResolver;
@@ -20,16 +21,17 @@ class Router
     public function __construct()
     {
         $this->resolvers = [
-            '404' => new NotFoundResolver(),
-            'search' => new SearchResolver(),
-            'front' => new FrontResolver(),
-            'home' => new HomeResolver(),
+            '404'      => new NotFoundResolver(),
+            'search'   => new SearchResolver(),
+            'front'    => new FrontResolver(),
+            'home'     => new HomeResolver(),
             'taxonomy' => new TaxonomyResolver(),
-            'single' => new SingleResolver(),
-            'page' => new PageResolver(),
+            'single'   => new SingleResolver(),
+            'date'     => new DateResolver(),
+            'page'     => new PageResolver(),
             'category' => new CategoryResolver(),
-            'archive' => new ArchiveResolver(),
-            'index' => new Resolver()
+            'archive'  => new ArchiveResolver(),
+            'index'    => new Resolver()
         ];
     }
 
@@ -58,7 +60,7 @@ class Router
         elseif (is_category()          && $resolver = 'category') :
         elseif (is_tag()               && $resolver = get_tag_template()) :
         elseif (is_author()            && $resolver = get_author_template()) :
-        elseif (is_date()              && $resolver = get_date_template()) :
+        elseif (is_date()              && $resolver = 'date') :
         elseif (is_archive()           && $resolver = 'archive') :
         elseif (is_comments_popup()    && $resolver = get_comments_popup_template()) :
         elseif (is_paged()             && $resolver = get_paged_template()) :
