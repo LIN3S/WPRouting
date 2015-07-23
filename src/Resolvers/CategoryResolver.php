@@ -11,6 +11,7 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -24,7 +25,7 @@ class CategoryResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['category', 'archive'];
+    protected $types = [ResolverInterface::TYPE_CATEGORY, ResolverInterface::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
@@ -34,12 +35,12 @@ class CategoryResolver extends Resolver
         $category = get_queried_object();
 
         if (!empty($category->slug)) {
-            $controllers = $routes->getByTypeAndSlug('category', $category->slug);
+            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_CATEGORY, $category->slug);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
 
-            $controllers = $routes->getByTypeAndId('category', $category->term_id);
+            $controllers = $routes->getByTypeAndId(ResolverInterface::TYPE_CATEGORY, $category->term_id);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

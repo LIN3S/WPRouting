@@ -11,6 +11,7 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -24,7 +25,7 @@ class PageResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['page'];
+    protected $types = [ResolverInterface::TYPE_PAGE];
 
     /**
      * {@inheritdoc}
@@ -42,7 +43,7 @@ class PageResolver extends Resolver
 
         $pagename = get_query_var('pagename');
         if ($pagename) {
-            $controllers = $routes->getByTypeAndSlug('page', $pagename);
+            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_PAGE, $pagename);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
@@ -50,7 +51,7 @@ class PageResolver extends Resolver
 
         $id = get_queried_object_id();
         if ($id) {
-            $controllers = $routes->getByTypeAndId('page', $id);
+            $controllers = $routes->getByTypeAndId(ResolverInterface::TYPE_PAGE, $id);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

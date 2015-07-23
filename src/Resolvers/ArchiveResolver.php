@@ -11,6 +11,7 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -24,7 +25,7 @@ class ArchiveResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['archive'];
+    protected $types = [ResolverInterface::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
@@ -37,7 +38,7 @@ class ArchiveResolver extends Resolver
             $postType = reset($postType);
         }
 
-        $controllers = $routes->getByTypeAndSlug('archive', $postType);
+        $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_ARCHIVE, $postType);
         if (count($controllers) > 0) {
             return $controllers[0];
         }

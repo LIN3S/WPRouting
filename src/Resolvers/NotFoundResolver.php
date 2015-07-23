@@ -11,6 +11,8 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
+
 /**
  * Not found routing resolver. It is a custom specification of base resolver.
  *
@@ -22,5 +24,5 @@ class NotFoundResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['404'];
+    protected $types = [ResolverInterface::TYPE_404];
 }

@@ -11,6 +11,8 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
+
 /**
  * Date routing resolver. It is a custom specification of base resolver.
  *
@@ -22,5 +24,5 @@ class DateResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['date'];
+    protected $types = [ResolverInterface::TYPE_DATE];
 }

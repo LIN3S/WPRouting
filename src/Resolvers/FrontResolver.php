@@ -11,6 +11,8 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
+
 /**
  * Front routing resolver. It is a custom specification of base resolver.
  *
@@ -22,5 +24,5 @@ class FrontResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['front', 'home'];
+    protected $types = [ResolverInterface::TYPE_FRONT, ResolverInterface::TYPE_HOME];
 }

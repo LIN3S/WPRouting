@@ -11,6 +11,7 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -24,7 +25,7 @@ class SingleResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['single'];
+    protected $types = [ResolverInterface::TYPE_SINGLE];
 
     /**
      * {@inheritdoc}
@@ -34,7 +35,7 @@ class SingleResolver extends Resolver
         $object = get_queried_object();
 
         if (!empty($object->post_type)) {
-            $controllers = $routes->getByTypeAndSlug('single', $object->post_type);
+            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_SINGLE, $object->post_type);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

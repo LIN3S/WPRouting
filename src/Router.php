@@ -46,17 +46,17 @@ class Router
     public function __construct()
     {
         $this->resolvers = [
-            '404'      => new NotFoundResolver(),
-            'search'   => new SearchResolver(),
-            'front'    => new FrontResolver(),
-            'home'     => new HomeResolver(),
-            'taxonomy' => new TaxonomyResolver(),
-            'single'   => new SingleResolver(),
-            'date'     => new DateResolver(),
-            'page'     => new PageResolver(),
-            'category' => new CategoryResolver(),
-            'archive'  => new ArchiveResolver(),
-            'index'    => new Resolver()
+            ResolverInterface::TYPE_404      => new NotFoundResolver(),
+            ResolverInterface::TYPE_SEARCH   => new SearchResolver(),
+            ResolverInterface::TYPE_FRONT    => new FrontResolver(),
+            ResolverInterface::TYPE_HOME     => new HomeResolver(),
+            ResolverInterface::TYPE_TAXONOMY => new TaxonomyResolver(),
+            ResolverInterface::TYPE_SINGLE   => new SingleResolver(),
+            ResolverInterface::TYPE_DATE     => new DateResolver(),
+            ResolverInterface::TYPE_PAGE     => new PageResolver(),
+            ResolverInterface::TYPE_CATEGORY => new CategoryResolver(),
+            ResolverInterface::TYPE_ARCHIVE  => new ArchiveResolver(),
+            ResolverInterface::TYPE_INDEX    => new Resolver()
         ];
     }
 

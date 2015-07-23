@@ -11,6 +11,8 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
+use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
+
 /**
  * Search routing resolver. It is a custom specification of base resolver.
  *
@@ -22,5 +24,5 @@ class SearchResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = ['search'];
+    protected $types = [ResolverInterface::TYPE_SEARCH];
 }

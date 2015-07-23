@@ -43,6 +43,6 @@ class Resolver implements ResolverInterface
             }
         }
 
-        return $routes->getByType('index')[0];
+        return $routes->getByType(ResolverInterface::TYPE_INDEX)[0];
     }
 }
