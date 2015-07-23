@@ -46,7 +46,7 @@ class RouteRegistry
      */
     public static function create()
     {
-        if (!isset($instance)) {
+        if (!isset(self::$instance)) {
             self::$instance = new self();
         }
 
@@ -100,7 +100,7 @@ class RouteRegistry
      */
     public function getByTemplate($template)
     {
-        $this->match($template);
+        return $this->match($template);
     }
 
     /**
