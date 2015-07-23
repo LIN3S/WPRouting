@@ -39,3 +39,9 @@ $ composer require lin3s/wp-routing
 
 ## Licensing Options
 [![License](https://poser.pugx.org/lin3s/wp-routing/license.svg)](https://github.com/LIN3S/WPRouting/blob/master/LICENSE)
+
+[1]: http://lin3s.com
+[2]: https://symfony.com/
+[3]: https://github.com/LIN3S/WordpressStandard
+[4]: https://getcomposer.org/
+[5]: https://developer.wordpress.org/files/2014/10/wp-template-hierarchy.jpg
