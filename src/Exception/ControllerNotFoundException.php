@@ -9,18 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace LIN3S\WPRouting\Resolvers;
+namespace LIN3S\WPRouting\Exception;
 
 /**
- * Not found routing resolver. It is a custom specification of base resolver.
+ * Custom controller not found exception improving the ubiquity of the language.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  */
-class NotFoundResolver extends Resolver
+class ControllerNotFoundException extends \InvalidArgumentException
 {
     /**
-     * {@inheritdoc}
+     * Constructor.
      */
-    protected $types = ['404'];
+    public function __construct()
+    {
+        parent::__construct('All routes must have a controller');
+    }
 }
