@@ -51,7 +51,7 @@ As you can see in the example above you can use the following parameters for eac
 
 * `controller`: Defines with method will be called when a match for the given route exists.
 * `type`: Which type of route will match the current controller. It uses Wordpress standard naming conventions and you can
-check the available ones in [Router][6] class.
+check the available ones in [Router][7] class.
 * `slug` In case you need to target a specific category, post type (archive or single), taxonomy or page you can use this
 parameter to add its slug or ID.
 * `template`: Can be used in pages to select a custom template. Internally it uses `get_page_template_slug()` to get the
@@ -59,12 +59,12 @@ template the page requires. We use *template-selector* plugin to let the user se
 
 To resolve the routes added above just include the following code in your theme's `index.php`:
 
-``php
+```php
     $resolver = new \LIN3S\WPRouting\Router();
     $resolver->resolve();
 ```
 
-> Make sure WPRouting library is autoloaded using [composer's autoload script][7]
+> Make sure WPRouting library is autoloaded using [composer's autoload script][8]
 
 ## To Do
 - [ ] Finish the all uses cases of [Wordpress's template hierarchy][5].
@@ -84,6 +84,6 @@ To resolve the routes added above just include the following code in your theme'
 [3]: https://github.com/LIN3S/WordpressStandard
 [4]: https://getcomposer.org/
 [5]: https://developer.wordpress.org/files/2014/10/wp-template-hierarchy.jpg
-[5]: http://yaml.org/
-[6]: https://github.com/LIN3S/WPRouting/blob/master/src/Router.php
-[7]: https://getcomposer.org/doc/01-basic-usage.md#autoloading
+[6]: http://yaml.org/
+[7]: https://github.com/LIN3S/WPRouting/blob/master/src/Router.php
+[8]: https://getcomposer.org/doc/01-basic-usage.md#autoloading
