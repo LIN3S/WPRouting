@@ -52,7 +52,7 @@ As you can see in the example above you can use the following parameters for eac
 * `controller`: Defines with method will be called when a match for the given route exists.
 * `type`: Which type of route will match the current controller. It uses Wordpress standard naming conventions and you can
 check the available ones in [Router][7] class.
-* `slug` In case you need to target a specific category, post type (archive or single), taxonomy or page you can use this
+* `slug`: In case you need to target a specific category, post type (archive or single), taxonomy or page you can use this
 parameter to add its slug or ID.
 * `template`: Can be used in pages to select a custom template. Internally it uses `get_page_template_slug()` to get the
 template the page requires. We use *template-selector* plugin to let the user select the template to be used.
