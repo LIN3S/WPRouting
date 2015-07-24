@@ -23,7 +23,7 @@ use Symfony\Component\Yaml\Yaml;
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  */
-class RouteRegistry
+final class RouteRegistry
 {
     /**
      * Static variable which contains the class itself.
@@ -123,8 +123,8 @@ class RouteRegistry
     /**
      * Matches the type and arguments given with the instance routes.
      *
-     * @param string $name      The type of route, also can be a template name.
-     * @param array  $arguments The arguments
+     * @param string     $name      The type of route, also can be a template name.
+     * @param array|null $arguments The arguments
      *
      * @return array
      */
