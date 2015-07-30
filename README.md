@@ -55,7 +55,7 @@ check the available ones in [Router][7] class.
 * `slug`: In case you need to target a specific category, post type (archive or single), taxonomy or page you can use this
 parameter to add its slug or ID.
 * `template`: Can be used in pages to select a custom template. Internally it uses `get_page_template_slug()` to get the
-template the page requires. We use *template-selector* plugin to let the user select the template to be used.
+template the page requires. We use our [*template-selector*][9] plugin to let the user select the template to be used.
 
 To resolve the routes added above just include the following code in your theme's `index.php`:
 
@@ -87,3 +87,4 @@ To resolve the routes added above just include the following code in your theme'
 [6]: http://yaml.org/
 [7]: https://github.com/LIN3S/WPRouting/blob/master/src/Router.php
 [8]: https://getcomposer.org/doc/01-basic-usage.md#autoloading
+[9]: https://github.com/LIN3S/WPTemplateSelector
