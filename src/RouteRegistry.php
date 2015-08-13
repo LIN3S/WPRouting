@@ -137,7 +137,7 @@ final class RouteRegistry
                 continue;
             }
 
-            if ($route['type'] === $name) {
+            if ((string)$route['type'] === $name) {
                 if (null !== $arguments) {
                     if (isset($route[$arguments[0]]) && $route[$arguments[0]] === $arguments[1]) {
                         $found[] = $route;
