@@ -74,7 +74,7 @@ final class RouteRegistry
     /**
      * Matches the type and arguments given with the instance routes.
      *
-     * @param string     $name      The type of route, it can also can be a template name.
+     * @param string     $name      The type of route
      * @param array|null $arguments The arguments
      *
      * @return array

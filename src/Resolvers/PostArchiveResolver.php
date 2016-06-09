@@ -32,7 +32,7 @@ class PostArchiveResolver extends Resolver
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
-    {die;
+    {
         $postType = get_query_var('post_type');
 
         if (is_array($postType)) {

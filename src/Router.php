@@ -124,7 +124,7 @@ class Router
     /**
      * Calls to the controller's action given. It supports static or non-static calls.
      *
-     * @param string $controller The fully qualified namespace controller and its action 
+     * @param string $controller The fully qualified namespace controller and its action
      *
      * @return mixed
      */
