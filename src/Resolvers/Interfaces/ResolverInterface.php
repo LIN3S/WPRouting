@@ -19,28 +19,31 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 interface ResolverInterface
 {
     const TYPE_INDEX = 'index';
-    const TYPE_404 = '404';
+    const TYPE_EMBED = 'embed';
+    const TYPE_404 = 404;
     const TYPE_SEARCH = 'search';
     const TYPE_FRONT = 'front';
     const TYPE_HOME = 'home';
-    const TYPE_ARCHIVE = 'archive';
+    const TYPE_POST_ARCHIVE = 'post_archive';
     const TYPE_TAXONOMY = 'taxonomy';
     const TYPE_ATTACHMENT = 'attachment';
     const TYPE_SINGLE = 'single';
     const TYPE_PAGE = 'page';
+    const TYPE_SINGULAR = 'singular';
     const TYPE_CATEGORY = 'category';
     const TYPE_TAG = 'tag';
     const TYPE_AUTHOR = 'author';
     const TYPE_DATE = 'date';
-    const TYPE_COMMENT = 'comment';
+    const TYPE_ARCHIVE = 'archive';
     const TYPE_PAGED = 'paged';
 
     /**
-     * Resolves its types with a proper controller.
+     * Resolves it's types with a proper controller.
      *
      * @param \LIN3S\WPRouting\RouteRegistry $routes The route registry
      *

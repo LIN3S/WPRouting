@@ -15,34 +15,40 @@ use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Archive routing resolver. It is a custom specification of base resolver.
+ * Embed routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class ArchiveResolver extends Resolver
+class EmbedResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [ResolverInterface::TYPE_EMBED];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
     {
-        $postTypes = get_query_var('post_type');
+        $object = get_queried_object();
 
-        if (count($postTypes) == 1) {
-            $postType = reset($postTypes);
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_ARCHIVE, ['posttype' => $postType]);
-            if (count($controllers) > 0) {
-                return $controllers[0];
+        if (!empty($object->post_type)) {
+            $postFormat = get_post_format($object);
+            if ($postFormat) {
+                $controllers = $routes->match(ResolverInterface::TYPE_EMBED, [
+                    'post_type'   => $object->post_type,
+                    'post_format' => $object->post_format,
+                ]);
+                if (count($controllers) > 0) {
+                    return $controllers[0];
+                }
             }
-
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_ARCHIVE);
+            $controllers = $routes->match(ResolverInterface::TYPE_EMBED, [
+                'post_type' => $object->post_type,
+            ]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

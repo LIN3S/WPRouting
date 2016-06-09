@@ -19,42 +19,56 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 class PageResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_PAGE];
+    protected $types = [ResolverInterface::TYPE_PAGE, ResolverInterface::TYPE_SINGULAR];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
     {
-        $template = get_page_template_slug();
+        $id = get_queried_object_id();
+        $template = get_post_meta(get_queried_object_id(), '_wp_page_template', true);
 
         if ($template) {
-            $controllers = $routes->getByTemplate($template);
+            $controllers = $routes->match(ResolverInterface::TYPE_PAGE, ['template' => $template]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
         $pagename = get_query_var('pagename');
+
+        if (!$pagename && $id) {
+            // If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
+            $post = get_queried_object();
+            if ($post) {
+                $pagename = $post->post_name;
+            }
+        }
+
         if ($pagename) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_PAGE, $pagename);
+            $controllers = $routes->match(ResolverInterface::TYPE_PAGE, ['slug' => $pagename]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+        }
+        if ($id) {
+            $controllers = $routes->match(ResolverInterface::TYPE_PAGE, ['id' => $id]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
-        $id = get_queried_object_id();
-        if ($id) {
-            $controllers = $routes->getByTypeAndId(ResolverInterface::TYPE_PAGE, $id);
-            if (count($controllers) > 0) {
-                return $controllers[0];
-            }
+        $controllers = $routes->match(ResolverInterface::TYPE_PAGE);
+        if (count($controllers) > 0) {
+            return $controllers[0];
         }
 
         return parent::resolve($routes);

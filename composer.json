@@ -1,6 +1,6 @@
 {
     "name": "lin3s/wp-routing",
-    "description": "Symfony style routing for Wordpress",
+    "description": "Symfony style routing for WordPress",
     "keywords": ["lin3s", "wordpress", "routing", "symfony"],
     "type": "library",
     "license": "MIT",

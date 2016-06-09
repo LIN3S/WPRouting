@@ -22,6 +22,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 final class RouteRegistry
 {
@@ -54,56 +55,6 @@ final class RouteRegistry
     }
 
     /**
-     * Gets the routes of type given.
-     *
-     * @param string $type The type of route
-     *
-     * @return array
-     */
-    public function getByType($type)
-    {
-        return $this->match($type);
-    }
-
-    /**
-     * Gets the routes of type and id given.
-     *
-     * @param string $type The type of route
-     * @param string $id   The id
-     *
-     * @return array
-     */
-    public function getByTypeAndId($type, $id)
-    {
-        return $this->match($type, ['id', $id]);
-    }
-
-    /**
-     * Gets the routes of type and slug given.
-     *
-     * @param string $type The type of route
-     * @param string $slug The slug
-     *
-     * @return array
-     */
-    public function getByTypeAndSlug($type, $slug)
-    {
-        return $this->match($type, ['slug', $slug]);
-    }
-
-    /**
-     * Gets the routes of template given.
-     *
-     * @param string $template The template name
-     *
-     * @return array
-     */
-    public function getByTemplate($template)
-    {
-        return $this->match($template);
-    }
-
-    /**
      * Constructor.
      *
      * @throws \LIN3S\WPRouting\Exception\RoutingFileNotFoundException when the file not found
@@ -123,27 +74,22 @@ final class RouteRegistry
     /**
      * Matches the type and arguments given with the instance routes.
      *
-     * @param string     $name      The type of route, also can be a template name.
+     * @param string     $name      The type of route, it can also can be a template name.
      * @param array|null $arguments The arguments
      *
      * @return array
      */
-    private function match($name, array $arguments = null)
+    public function match($name, array $arguments = null)
     {
         $found = [];
         foreach ($this->routes as $route) {
-            if (isset($route['template']) && $route['template'] === $name) {
-                $found[] = $route;
+            if (!is_array($route) || !isset($route['controller']) || $route['type'] !== $name) {
                 continue;
             }
-
-            if ((string)$route['type'] === $name) {
-                if (null !== $arguments) {
-                    if (isset($route[$arguments[0]]) && $route[$arguments[0]] === $arguments[1]) {
-                        $found[] = $route;
-                    }
-                    continue;
-                }
+            $routeTmp = $route;
+            unset($routeTmp['controller']);
+            unset($routeTmp['type']);
+            if ((empty($routeTmp) && empty($arguments)) || $routeTmp === $arguments) {
                 $found[] = $route;
             }
         }

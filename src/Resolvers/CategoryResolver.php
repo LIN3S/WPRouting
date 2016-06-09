@@ -19,6 +19,7 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 class CategoryResolver extends Resolver
 {
@@ -35,12 +36,17 @@ class CategoryResolver extends Resolver
         $category = get_queried_object();
 
         if (!empty($category->slug)) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_CATEGORY, $category->slug);
+            $controllers = $routes->match(ResolverInterface::TYPE_CATEGORY, ['slug' => $category->slug]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
 
-            $controllers = $routes->getByTypeAndId(ResolverInterface::TYPE_CATEGORY, $category->term_id);
+            $controllers = $routes->match(ResolverInterface::TYPE_CATEGORY, ['id' => $category->term_id]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(ResolverInterface::TYPE_CATEGORY);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

@@ -15,35 +15,36 @@ use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Base routing resolver. This class contains a default implementation
- * of resolve method, it is used to resolve the simple use cases.
+ * Post Archive routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class Resolver implements ResolverInterface
+class PostArchiveResolver extends Resolver
 {
     /**
-     * Array which contains the different types to match with WordPress's template loader.
-     *
-     * @var array
+     * {@inheritdoc}
      */
-    protected $types = [];
+    protected $types = [ResolverInterface::TYPE_POST_ARCHIVE, ResolverInterface::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
-    {
-        foreach ($this->types as $type) {
-            $controllers = $routes->match($type);
+    {die;
+        $postType = get_query_var('post_type');
 
-            if (count($controllers) > 0) {
-                return $controllers[0];
-            }
+        if (is_array($postType)) {
+            $postType = reset($postType);
         }
 
-        return $routes->match(ResolverInterface::TYPE_404)[0];
+        $object = get_post_type_object($postType);
+        if (!$object->has_archive) {
+            return '';
+        }
+
+        $archiveResolver = new ArchiveResolver();
+        $archiveResolver->resolve($routes);
     }
 }

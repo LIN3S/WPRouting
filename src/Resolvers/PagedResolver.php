@@ -12,18 +12,19 @@
 namespace LIN3S\WPRouting\Resolvers;
 
 use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
+use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Date routing resolver. It is a custom specification of base resolver.
+ * Paged routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class DateResolver extends Resolver
+class PagedResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_DATE, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [ResolverInterface::TYPE_PAGED];
 }

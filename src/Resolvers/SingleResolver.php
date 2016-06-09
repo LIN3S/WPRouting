@@ -19,13 +19,14 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 class SingleResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_SINGLE];
+    protected $types = [ResolverInterface::TYPE_SINGLE, ResolverInterface::TYPE_SINGULAR];
 
     /**
      * {@inheritdoc}
@@ -35,7 +36,15 @@ class SingleResolver extends Resolver
         $object = get_queried_object();
 
         if (!empty($object->post_type)) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_SINGLE, $object->post_type);
+            $controllers = $routes->match(ResolverInterface::TYPE_SINGLE, [
+                'posttype' => $object->post_type,
+                'postname' => $object->post_name,
+            ]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(ResolverInterface::TYPE_SINGLE, ['posttype' => $object->post_type]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

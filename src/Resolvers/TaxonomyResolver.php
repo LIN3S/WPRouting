@@ -19,6 +19,7 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 class TaxonomyResolver extends Resolver
 {
@@ -35,17 +36,23 @@ class TaxonomyResolver extends Resolver
         $term = get_queried_object();
 
         if (!empty($term->slug)) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_TAXONOMY, $term->slug);
+            $controllers = $routes->match(ResolverInterface::TYPE_TAXONOMY, [
+                'taxonomy' => $term->taxonomy,
+                'term'     => $term->slug,
+            ]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(ResolverInterface::TYPE_TAXONOMY, ['taxonomy' => $term->taxonomy]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
-        if (!empty($term->taxonomy)) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_TAXONOMY, $term->taxonomy);
-            if (count($controllers) > 0) {
-                return $controllers[0];
-            }
+        $controllers = $routes->match(ResolverInterface::TYPE_TAXONOMY);
+        if (count($controllers) > 0) {
+            return $controllers[0];
         }
 
         return parent::resolve($routes);
