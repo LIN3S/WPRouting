@@ -39,15 +39,15 @@ class EmbedResolver extends Resolver
             $postFormat = get_post_format($object);
             if ($postFormat) {
                 $controllers = $routes->match(ResolverInterface::TYPE_EMBED, [
-                    'post_type'   => $object->post_type,
-                    'post_format' => $object->post_format,
+                    'posttype'   => $object->post_type,
+                    'postformat' => $object->post_format,
                 ]);
                 if (count($controllers) > 0) {
                     return $controllers[0];
                 }
             }
             $controllers = $routes->match(ResolverInterface::TYPE_EMBED, [
-                'post_type' => $object->post_type,
+                'posttype' => $object->post_type,
             ]);
             if (count($controllers) > 0) {
                 return $controllers[0];
