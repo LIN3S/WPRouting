@@ -1,6 +1,8 @@
 # WP Routing
 > Symfony style routing for WordPress.
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f1144050-315f-4c30-a142-c571d42a0334/mini.png)](https://insight.sensiolabs.com/projects/f1144050-315f-4c30-a142-c571d42a0334)
+[![Build Status](https://travis-ci.org/LIN3S/WPRouting.svg?branch=master)](https://travis-ci.org/LIN3S/WPRouting)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LIN3S/WPRouting/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/LIN3S/WPRouting/?branch=master)
 [![Total Downloads](https://poser.pugx.org/lin3s/wp-routing/downloads)](https://packagist.org/packages/lin3s/wp-routing)
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -66,8 +68,7 @@ can use extra parameters like slug, id or posttype (see variable names on [WordP
 To resolve the routes added above just include the following code in your theme's `index.php`:
 
 ```php
-    $resolver = new \LIN3S\WPRouting\Router();
-    $resolver->resolve();
+    (new \LIN3S\WPRouting\Router())->resolve();
 ```
 
 > Make sure WPRouting library is autoloaded using [composer's autoload script][8]
