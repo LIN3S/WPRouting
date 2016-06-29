@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace LIN3S\WPRouting\Resolvers\Interfaces;
+namespace LIN3S\WPRouting\Resolvers;
 
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Resolver interface. This interface forces to implement the resolve
- * method to obtain the proper controller of the request route.
+ * Base routing resolver. This class contains a default implementation
+ * of resolve method, it is used to resolve the simple use cases.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-interface ResolverInterface
+abstract class Resolver
 {
     const TYPE_INDEX = 'index';
     const TYPE_EMBED = 'embed';
@@ -43,11 +43,29 @@ interface ResolverInterface
     const TYPE_PAGED = 'paged';
 
     /**
+     * Array which contains the different types to match with WordPress's template loader.
+     *
+     * @var array
+     */
+    protected $types = [];
+
+    /**
      * Resolves it's types with a proper controller.
      *
      * @param \LIN3S\WPRouting\RouteRegistry $routes The route registry
      *
      * @return array|string
      */
-    public function resolve(RouteRegistry $routes);
-} 
+    public function resolve(RouteRegistry $routes)
+    {
+        foreach ($this->types as $type) {
+            $controllers = $routes->match($type);
+
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+        }
+
+        return $routes->match(self::TYPE_404)[0];
+    }
+}

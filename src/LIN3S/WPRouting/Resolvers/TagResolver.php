@@ -11,38 +11,41 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Archive routing resolver. It is a custom specification of base resolver.
+ * Tag routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class ArchiveResolver extends Resolver
+class TagResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_TAG, Resolver::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
     {
-        $postTypes = get_query_var('post_type');
+        $tag = get_queried_object();
 
-        if (count($postTypes) == 1) {
-            $postType = reset($postTypes);
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_ARCHIVE, ['posttype' => $postType]);
+        if (!empty($tag->slug)) {
+            $controllers = $routes->match(Resolver::TYPE_TAG, ['slug' => $tag->slug]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
 
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_ARCHIVE);
+            $controllers = $routes->match(Resolver::TYPE_TAG, ['id' => $tag->term_id]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(Resolver::TYPE_TAG);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

@@ -11,18 +11,16 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
-
 /**
- * Search routing resolver. It is a custom specification of base resolver.
+ * Home routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  */
-class SearchResolver extends Resolver
+class HomeResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_SEARCH];
+    protected $types = [Resolver::TYPE_HOME];
 }

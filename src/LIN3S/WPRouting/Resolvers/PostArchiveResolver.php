@@ -11,7 +11,6 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -26,7 +25,7 @@ class PostArchiveResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_POST_ARCHIVE, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_POST_ARCHIVE, Resolver::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}

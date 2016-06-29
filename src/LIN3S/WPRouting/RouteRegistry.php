@@ -100,8 +100,9 @@ final class RouteRegistry
     /**
      * Iterates over all the routes and checks some validations.
      *
-     * @throws \LIN3S\WPRouting\Exception\ControllerNotFoundException when the controller associated not found
+     * @throws \LIN3S\WPRouting\Exception\ControllerNotFoundException  when the controller associated not found
      * @throws \LIN3S\WPRouting\Exception\RoutingFileNotFoundException when the type does not exist
+     *
      * @return self
      */
     private function validate()
@@ -118,4 +119,4 @@ final class RouteRegistry
 
         return $this;
     }
-} 
+}

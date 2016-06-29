@@ -11,7 +11,6 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -26,7 +25,7 @@ class PageResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_PAGE, ResolverInterface::TYPE_SINGULAR];
+    protected $types = [Resolver::TYPE_PAGE, Resolver::TYPE_SINGULAR];
 
     /**
      * {@inheritdoc}
@@ -37,7 +36,7 @@ class PageResolver extends Resolver
         $template = get_post_meta(get_queried_object_id(), '_wp_page_template', true);
 
         if ($template) {
-            $controllers = $routes->match(ResolverInterface::TYPE_PAGE, ['template' => $template]);
+            $controllers = $routes->match(Resolver::TYPE_PAGE, ['template' => $template]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
@@ -54,19 +53,19 @@ class PageResolver extends Resolver
         }
 
         if ($pagename) {
-            $controllers = $routes->match(ResolverInterface::TYPE_PAGE, ['slug' => $pagename]);
+            $controllers = $routes->match(Resolver::TYPE_PAGE, ['slug' => $pagename]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
         if ($id) {
-            $controllers = $routes->match(ResolverInterface::TYPE_PAGE, ['id' => $id]);
+            $controllers = $routes->match(Resolver::TYPE_PAGE, ['id' => $id]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
-        $controllers = $routes->match(ResolverInterface::TYPE_PAGE);
+        $controllers = $routes->match(Resolver::TYPE_PAGE);
         if (count($controllers) > 0) {
             return $controllers[0];
         }

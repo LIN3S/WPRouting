@@ -11,40 +11,41 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Single routing resolver. It is a custom specification of base resolver.
+ * Category routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class SingleResolver extends Resolver
+class CategoryResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_SINGLE, ResolverInterface::TYPE_SINGULAR];
+    protected $types = [Resolver::TYPE_CATEGORY, Resolver::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
     {
-        $object = get_queried_object();
+        $category = get_queried_object();
 
-        if (!empty($object->post_type)) {
-            $controllers = $routes->match(ResolverInterface::TYPE_SINGLE, [
-                'posttype' => $object->post_type,
-                'postname' => $object->post_name,
-            ]);
+        if (!empty($category->slug)) {
+            $controllers = $routes->match(Resolver::TYPE_CATEGORY, ['slug' => $category->slug]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
 
-            $controllers = $routes->match(ResolverInterface::TYPE_SINGLE, ['posttype' => $object->post_type]);
+            $controllers = $routes->match(Resolver::TYPE_CATEGORY, ['id' => $category->term_id]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(Resolver::TYPE_CATEGORY);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

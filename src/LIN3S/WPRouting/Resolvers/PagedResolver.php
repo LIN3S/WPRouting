@@ -11,18 +11,17 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
-
 /**
- * Home routing resolver. It is a custom specification of base resolver.
+ * Paged routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
-class HomeResolver extends Resolver
+class PagedResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_HOME];
+    protected $types = [Resolver::TYPE_PAGED];
 }

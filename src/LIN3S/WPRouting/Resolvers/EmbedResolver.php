@@ -11,42 +11,43 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Tag routing resolver. It is a custom specification of base resolver.
+ * Embed routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class TagResolver extends Resolver
+class EmbedResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_TAG, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_EMBED];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
     {
-        $tag = get_queried_object();
+        $object = get_queried_object();
 
-        if (!empty($tag->slug)) {
-            $controllers = $routes->match(ResolverInterface::TYPE_TAG, ['slug' => $tag->slug]);
-            if (count($controllers) > 0) {
-                return $controllers[0];
+        if (!empty($object->post_type)) {
+            $postFormat = get_post_format($object);
+            if ($postFormat) {
+                $controllers = $routes->match(Resolver::TYPE_EMBED, [
+                    'posttype'   => $object->post_type,
+                    'postformat' => $object->post_format,
+                ]);
+                if (count($controllers) > 0) {
+                    return $controllers[0];
+                }
             }
-
-            $controllers = $routes->match(ResolverInterface::TYPE_TAG, ['id' => $tag->term_id]);
-            if (count($controllers) > 0) {
-                return $controllers[0];
-            }
-
-            $controllers = $routes->match(ResolverInterface::TYPE_TAG);
+            $controllers = $routes->match(Resolver::TYPE_EMBED, [
+                'posttype' => $object->post_type,
+            ]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

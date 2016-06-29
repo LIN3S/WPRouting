@@ -11,20 +11,17 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
-use LIN3S\WPRouting\RouteRegistry;
-
 /**
- * Author routing resolver. It is a custom specification of base resolver.
+ * Date routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class AuthorResolver extends Resolver
+class DateResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_AUTHOR, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_DATE, Resolver::TYPE_ARCHIVE];
 }

@@ -11,20 +11,16 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
-use LIN3S\WPRouting\RouteRegistry;
-
 /**
- * Paged routing resolver. It is a custom specification of base resolver.
+ * Search routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
- * @author Jon Torrado <jontorrado@gmail.com>
  */
-class PagedResolver extends Resolver
+class SearchResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_PAGED];
+    protected $types = [Resolver::TYPE_SEARCH];
 }

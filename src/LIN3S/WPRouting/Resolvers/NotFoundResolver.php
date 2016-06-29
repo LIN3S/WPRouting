@@ -11,19 +11,16 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
-
 /**
- * Date routing resolver. It is a custom specification of base resolver.
+ * Not found routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
- * @author Jon Torrado <jontorrado@gmail.com>
  */
-class DateResolver extends Resolver
+class NotFoundResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_DATE, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_404];
 }

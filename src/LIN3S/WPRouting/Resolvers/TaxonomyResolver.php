@@ -11,7 +11,6 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -26,7 +25,7 @@ class TaxonomyResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_TAXONOMY, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_TAXONOMY, Resolver::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
@@ -36,7 +35,7 @@ class TaxonomyResolver extends Resolver
         $term = get_queried_object();
 
         if (!empty($term->slug)) {
-            $controllers = $routes->match(ResolverInterface::TYPE_TAXONOMY, [
+            $controllers = $routes->match(Resolver::TYPE_TAXONOMY, [
                 'taxonomy' => $term->taxonomy,
                 'term'     => $term->slug,
             ]);
@@ -44,13 +43,13 @@ class TaxonomyResolver extends Resolver
                 return $controllers[0];
             }
 
-            $controllers = $routes->match(ResolverInterface::TYPE_TAXONOMY, ['taxonomy' => $term->taxonomy]);
+            $controllers = $routes->match(Resolver::TYPE_TAXONOMY, ['taxonomy' => $term->taxonomy]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
-        $controllers = $routes->match(ResolverInterface::TYPE_TAXONOMY);
+        $controllers = $routes->match(Resolver::TYPE_TAXONOMY);
         if (count($controllers) > 0) {
             return $controllers[0];
         }

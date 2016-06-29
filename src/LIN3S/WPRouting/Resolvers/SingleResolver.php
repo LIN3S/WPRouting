@@ -11,22 +11,21 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
- * Embed routing resolver. It is a custom specification of base resolver.
+ * Single routing resolver. It is a custom specification of base resolver.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  * @author Jon Torrado <jontorrado@gmail.com>
  */
-class EmbedResolver extends Resolver
+class SingleResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_EMBED];
+    protected $types = [Resolver::TYPE_SINGLE, Resolver::TYPE_SINGULAR];
 
     /**
      * {@inheritdoc}
@@ -36,19 +35,15 @@ class EmbedResolver extends Resolver
         $object = get_queried_object();
 
         if (!empty($object->post_type)) {
-            $postFormat = get_post_format($object);
-            if ($postFormat) {
-                $controllers = $routes->match(ResolverInterface::TYPE_EMBED, [
-                    'posttype'   => $object->post_type,
-                    'postformat' => $object->post_format,
-                ]);
-                if (count($controllers) > 0) {
-                    return $controllers[0];
-                }
-            }
-            $controllers = $routes->match(ResolverInterface::TYPE_EMBED, [
+            $controllers = $routes->match(Resolver::TYPE_SINGLE, [
                 'posttype' => $object->post_type,
+                'postname' => $object->post_name,
             ]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(Resolver::TYPE_SINGLE, ['posttype' => $object->post_type]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

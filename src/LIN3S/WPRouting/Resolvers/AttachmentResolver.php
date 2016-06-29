@@ -11,7 +11,6 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -26,7 +25,7 @@ class AttachmentResolver extends Resolver
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_ATTACHMENT, ResolverInterface::TYPE_SINGLE];
+    protected $types = [Resolver::TYPE_ATTACHMENT, Resolver::TYPE_SINGLE];
 
     /**
      * {@inheritdoc}
@@ -56,7 +55,7 @@ class AttachmentResolver extends Resolver
                 return $controllers[0];
             }
 
-            $controllers = $routes->match(ResolverInterface::TYPE_ATTACHMENT);
+            $controllers = $routes->match(Resolver::TYPE_ATTACHMENT);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
