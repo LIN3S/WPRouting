@@ -3,7 +3,7 @@
 /*
  * This file is part of the WPRouting library.
  *
- * Copyright (c) 2015 LIN3S <info@lin3s.com>
+ * Copyright (c) 2015-2016 LIN3S <info@lin3s.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,6 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -19,13 +18,14 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 class CategoryResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_CATEGORY, ResolverInterface::TYPE_ARCHIVE];
+    protected $types = [Resolver::TYPE_CATEGORY, Resolver::TYPE_ARCHIVE];
 
     /**
      * {@inheritdoc}
@@ -35,12 +35,17 @@ class CategoryResolver extends Resolver
         $category = get_queried_object();
 
         if (!empty($category->slug)) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_CATEGORY, $category->slug);
+            $controllers = $routes->match(Resolver::TYPE_CATEGORY, ['slug' => $category->slug]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
 
-            $controllers = $routes->getByTypeAndId(ResolverInterface::TYPE_CATEGORY, $category->term_id);
+            $controllers = $routes->match(Resolver::TYPE_CATEGORY, ['id' => $category->term_id]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+
+            $controllers = $routes->match(Resolver::TYPE_CATEGORY);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }

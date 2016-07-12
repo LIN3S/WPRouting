@@ -3,7 +3,7 @@
 /*
  * This file is part of the WPRouting library.
  *
- * Copyright (c) 2015 LIN3S <info@lin3s.com>
+ * Copyright (c) 2015-2016 LIN3S <info@lin3s.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,6 @@
 
 namespace LIN3S\WPRouting\Resolvers;
 
-use LIN3S\WPRouting\Resolvers\Interfaces\ResolverInterface;
 use LIN3S\WPRouting\RouteRegistry;
 
 /**
@@ -19,42 +18,56 @@ use LIN3S\WPRouting\RouteRegistry;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
+ * @author Jon Torrado <jontorrado@gmail.com>
  */
 class PageResolver extends Resolver
 {
     /**
      * {@inheritdoc}
      */
-    protected $types = [ResolverInterface::TYPE_PAGE];
+    protected $types = [Resolver::TYPE_PAGE, Resolver::TYPE_SINGULAR];
 
     /**
      * {@inheritdoc}
      */
     public function resolve(RouteRegistry $routes)
     {
-        $template = get_page_template_slug();
+        $id = get_queried_object_id();
+        $template = get_post_meta(get_queried_object_id(), '_wp_page_template', true);
 
         if ($template) {
-            $controllers = $routes->getByTemplate($template);
+            $controllers = $routes->match(Resolver::TYPE_PAGE, ['template' => $template]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
         $pagename = get_query_var('pagename');
+
+        if (!$pagename && $id) {
+            // If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
+            $post = get_queried_object();
+            if ($post) {
+                $pagename = $post->post_name;
+            }
+        }
+
         if ($pagename) {
-            $controllers = $routes->getByTypeAndSlug(ResolverInterface::TYPE_PAGE, $pagename);
+            $controllers = $routes->match(Resolver::TYPE_PAGE, ['slug' => $pagename]);
+            if (count($controllers) > 0) {
+                return $controllers[0];
+            }
+        }
+        if ($id) {
+            $controllers = $routes->match(Resolver::TYPE_PAGE, ['id' => $id]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
         }
 
-        $id = get_queried_object_id();
-        if ($id) {
-            $controllers = $routes->getByTypeAndId(ResolverInterface::TYPE_PAGE, $id);
-            if (count($controllers) > 0) {
-                return $controllers[0];
-            }
+        $controllers = $routes->match(Resolver::TYPE_PAGE);
+        if (count($controllers) > 0) {
+            return $controllers[0];
         }
 
         return parent::resolve($routes);
