@@ -31,14 +31,14 @@ final class RouteRegistry
      *
      * @var self
      */
-    protected static $instance;
+    private static $instance;
 
     /**
      * Array which contains all the routes of given file.
      *
      * @var array
      */
-    protected $routes;
+    private $routes;
 
     /**
      * Wrapper of the constructor to become this class in a singleton class.
@@ -52,23 +52,6 @@ final class RouteRegistry
         }
 
         return self::$instance;
-    }
-
-    /**
-     * Constructor.
-     *
-     * @throws \LIN3S\WPRouting\Exception\RoutingFileNotFoundException when the file not found
-     */
-    private function __construct()
-    {
-        $file = get_template_directory() . '/Resources/config/routing.yml';
-
-        if (!file_exists($file)) {
-            throw new RoutingFileNotFoundException();
-        }
-
-        $this->routes = Yaml::parse(file_get_contents($file));
-        $this->validate();
     }
 
     /**
@@ -98,10 +81,27 @@ final class RouteRegistry
     }
 
     /**
+     * Constructor.
+     *
+     * @throws RoutingFileNotFoundException when the file not found
+     */
+    private function __construct()
+    {
+        $file = get_template_directory() . '/Resources/config/routing.yml';
+
+        if (!file_exists($file)) {
+            throw new RoutingFileNotFoundException();
+        }
+
+        $this->routes = Yaml::parse(file_get_contents($file));
+        $this->validate();
+    }
+
+    /**
      * Iterates over all the routes and checks some validations.
      *
-     * @throws \LIN3S\WPRouting\Exception\ControllerNotFoundException  when the controller associated not found
-     * @throws \LIN3S\WPRouting\Exception\RoutingFileNotFoundException when the type does not exist
+     * @throws ControllerNotFoundException  when the controller associated not found
+     * @throws RoutingFileNotFoundException when the type does not exist
      *
      * @return self
      */
