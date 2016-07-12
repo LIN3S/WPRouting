@@ -68,12 +68,13 @@ can use extra parameters like slug, id or posttype (see variable names on [WordP
 To resolve the routes added above just include the following code in your theme's `index.php`:
 
 ```php
-    (new \LIN3S\WPRouting\Router())->resolve();
+(new \LIN3S\WPRouting\Router())->resolve();
 ```
 
 > Make sure WPRouting library is autoloaded using [composer's autoload script][8]
 
 ## To Do
+- [ ] Add more specs
 - [ ] Route registration wih XML
 - [ ] Route registration wih annotations
 
