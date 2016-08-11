@@ -44,6 +44,7 @@ class PostArchiveResolver extends Resolver
         }
 
         $archiveResolver = new ArchiveResolver();
-        $archiveResolver->resolve($routes);
+
+        return $archiveResolver->resolve($routes);
     }
 }
