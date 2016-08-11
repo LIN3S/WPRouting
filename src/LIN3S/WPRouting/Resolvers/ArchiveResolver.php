@@ -32,16 +32,16 @@ class ArchiveResolver extends Resolver
      */
     public function resolve(RouteRegistry $routes)
     {
-        $postTypes = get_query_var('post_type');
+        $postTypes = array_filter((array)get_query_var('post_type'));
 
         if (count($postTypes) === 1) {
             $postType = reset($postTypes);
-            $controllers = $routes->getByTypeAndSlug(Resolver::TYPE_ARCHIVE, ['posttype' => $postType]);
+            $controllers = $routes->match(Resolver::TYPE_ARCHIVE, ['posttype' => $postType]);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
 
-            $controllers = $routes->getByTypeAndSlug(Resolver::TYPE_ARCHIVE);
+            $controllers = $routes->match(Resolver::TYPE_ARCHIVE);
             if (count($controllers) > 0) {
                 return $controllers[0];
             }
